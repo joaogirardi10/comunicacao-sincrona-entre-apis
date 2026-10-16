@@ -1,0 +1,12 @@
+{
+  "name": "comunicacao-sincrona-entre-apis",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Atividade de Desenvolvimento de Sistemas Distribuidos com duas APIs Node.js independentes.",
+  "scripts": {
+    "produtos": "node produtos-api/server.js",
+    "pedidos": "node pedidos-api/server.js",
+    "teste": "node testes/teste-integracao.js"
+  },
+  "engines": {"node": ">=18"}
+}
