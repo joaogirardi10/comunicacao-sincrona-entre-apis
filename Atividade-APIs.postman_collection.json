@@ -1,0 +1,160 @@
+{
+  "info": {
+    "name": "Atividade - Comunicação Síncrona entre APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Testes da API Produtos (8080) e Pedidos (8081). Execute na ordem. Para o teste 10, pare somente Produtos."
+  },
+  "item": [
+    {
+      "name": "1 - Produtos / Estoque",
+      "item": [
+        {
+          "name": "01 - Cadastrar produto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "http://localhost:8080/produtos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Teclado Gamer\",\n  \"preco\": 150,\n  \"quantidade\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "02 - Listar produtos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/produtos"
+          }
+        },
+        {
+          "name": "03 - Consultar produto ID 1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/produtos/1"
+          }
+        },
+        {
+          "name": "04 - Ver estoque ANTES do pedido (10)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/produtos/1/estoque"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Pedidos / Comunicação síncrona",
+      "item": [
+        {
+          "name": "05 - Criar pedido: 3 unidades",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "http://localhost:8081/pedidos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente\": \"João\",\n  \"itens\": [\n    {\n      \"produtoId\": 1,\n      \"quantidade\": 3\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "06 - Ver estoque DEPOIS do pedido (7)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/produtos/1/estoque"
+          }
+        },
+        {
+          "name": "07 - Erro: solicitar 99 unidades",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "http://localhost:8081/pedidos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente\": \"João\",\n  \"itens\": [\n    {\n      \"produtoId\": 1,\n      \"quantidade\": 99\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "08 - Listar pedidos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8081/pedidos"
+          }
+        },
+        {
+          "name": "09 - Consultar pedido ID 1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8081/pedidos/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - Falha de serviço (teste final)",
+      "item": [
+        {
+          "name": "10 - APÓS parar a API Produtos: retornar 503",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "http://localhost:8081/pedidos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente\": \"João\",\n  \"itens\": [\n    {\n      \"produtoId\": 1,\n      \"quantidade\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
